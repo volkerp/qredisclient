@@ -17,22 +17,22 @@ int main(int argc, char *argv[])
 {
   // Init qredisclient
   initRedisClient();
-  
+
   // Create connection to local redis
   RedisClient::ConnectionConfig config("127.0.0.1");
   RedisClient::Connection connection(config);
-  
+
   // Run command and wait for result
-  connection.commandSync({"PING"}); 
-  
+  connection.commandSync({"PING"});
+
   // Run command in async mode
   connection.command({"PING"});
-  
+
   // Run command in db #2
-  connection.command({"PING"}, 2); 
-  
+  connection.command({"PING"}, 2);
+
   // Run async command with callback
-  connection.command({"PING"}, [](RedisClient::Response r) { 
+  connection.command({"PING"}, [](RedisClient::Response r) {
     QVariant val = r.getValue(); // get value from response
     // do stuff
   });
@@ -43,3 +43,29 @@ int main(int argc, char *argv[])
 ```
 
 ***Supported Qt versions:*** 5.6-5.9
+
+## Installation
+
+Pull in third party git submodules
+```
+git submodule update --init --recursive
+```
+
+
+Install static library and include files in /usr/local
+```
+qmake
+make install
+```
+
+To choose a different install location
+
+```
+qmake PREFIX=<path>
+```
+
+Specific locations for static library and include files
+```
+qmake LIB_DIR=<path> INCLUDE_DIR=<path
+```
+
